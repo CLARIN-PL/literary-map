@@ -1,0 +1,41 @@
+@(createForm: Form[Document])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@staticpage(page = "document_create", title = "Dodaj dokument", header = "") {
+    
+    @helper.form(action = routes.DocumentManager.submit) {
+        
+        <fieldset>
+            <legend>Dane dokumentu</legend>
+            
+            @inputText(
+                createForm("name"), 
+                '_label -> "Nazwa", 
+                '_help -> "Proszę wpisać poprawną nazwę dokumentu.",
+                '_error -> createForm.globalError
+            )
+            
+            @textarea(
+                createForm("plainText"), 
+                '_label -> "Tekst", 'cols -> 50
+            )
+            
+            <!--  inputText(
+                createForm("localization"), 
+                '_label -> "Lokalizacja (opcjonalnie)", 
+                '_help -> "Proszę wpisać poprawną lokalizację, np. Polska Wrocław.",
+                '_error -> createForm.globalError
+            ) -->
+            
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Dodaj">
+            <a href="@routes.Application.map" class="btn">Anuluj</a>
+        </div>
+        
+    }
+    
+}

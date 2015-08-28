@@ -1,0 +1,3 @@
+#Literary Map
+
+The main idea is to identify all geographical names in the literary text (or a corpus) and map them onto the geographical map. The task goes beyond Named Entity Recognition (NER), as NER must be combined with geo-location. We use geo-location service provided by Google, but still location PNs recognised in text must be grouped into expression recognised by Google in a way enabling good accuracy of locating them. We proposed to expand the initial idea with recognition of semantic relations linking non-spational PNs in the text with the location PNs and visualising those links on the map, too.

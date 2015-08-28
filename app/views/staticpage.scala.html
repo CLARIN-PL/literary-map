@@ -1,0 +1,9 @@
+@(page: String, title: String = "", header: String)(text: Html)
+
+@template(page, title) {
+	<div class="col-xs-12" id="left">
+		<h1 class="cover-heading">@header</h1>
+		@text
+	</div>
+} {
+}

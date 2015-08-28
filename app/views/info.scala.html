@@ -1,0 +1,8 @@
+@staticpage(page = "info", title="Informacje", header = "") {
+    	<p class="lead">
+    		Wykonano w ramach projektu <a href="http://clarin-pl.eu" target="_blank">CLARIN</a> oraz <a href="http://www.synat.pl" target="_blank">SyNaT</a> na <a href="http://www.pwr.wroc.pl/" target="_blank">Politechnice Wrocławskiej</a>.
+		</p>
+		<p class="lead" style="background-color: #168ccc; color: white; padding: 1px; width: 200px; font-size: 15px; font-family: monospace; text-align: center;">
+			@(Application.getAppName() + ' ' + Application.getAppVersion())
+		</p>
+}

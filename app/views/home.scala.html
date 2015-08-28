@@ -1,0 +1,57 @@
+@(message: String) @template(page = "home", title="Mapa") {
+
+  	<div class="col-xs-4" id="left">
+    
+      <!-- <h2>Bootstrap Google Maps Demo</h2> -->
+      
+      <!-- 
+      <div class="panel panel-default">
+        <div class="panel-heading"><a href="">Item heading</a></div>
+      </div>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. 
+        Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis 
+        dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan. 
+        Aliquam in felis sit amet augue.</p>
+        
+      <hr>      
+ 		-->
+		<!-- 
+	    <div class="mastfoot">
+	      <p>&copy; 2014 <a href="mailto:wojciech.gawel@@pwr.edu.pl">Wojciech Gaweł</a>, w ramach projektu <a href="http://clarin-pl.eu" target="_blank">CLARIN</a> oraz <a href="http://www.synat.pl" target="_blank">SyNaT</a> na <a href="http://www.pwr.wroc.pl/" target="_blank">Politechnice Wrocławskiej</a></p>
+	    </div>
+	    -->
+	
+		<h3>Wybierz dokument</h3>
+
+		<div style="margin: 10px 0px;">
+			<div id="documents" class="list-group">
+			</div>
+		</div>
+
+		<div class="show_when_document_choosen" style="display: none; border-top: 1px solid #eee;">
+			<h3>Tekst do analizy</h3>
+			<blockquote>
+				<textarea id="document_plainText">
+					brak wczytanego tekstu
+				</textarea>
+			</blockquote>
+			<a id="btn_process" class="btn btn-block btn-info ladda-button" data-style="expand-left" data-loading-text="Przetwarzanie..." style="margin-top: 40px">Przetw&oacute;rz
+				tekst</a>
+			<div class="show_when_text_processed" style="display: none; border-top: 1px solid #eee;"">
+				<section>
+					<h3>Rozpoznane obiekty</h3>
+				</section>
+				<div id="document_objects" class="list-group">
+				</div>
+		
+				
+			</div>
+			
+		</div>
+
+	</div>
+    <div class="col-xs-8"><!--map-canvas will be postioned here--></div>
+}{
+	<script src="@routes.Assets.at("javascripts/home.js")"></script>
+	<script src="@routes.Assets.at("javascripts/map.js")"></script>
+}
