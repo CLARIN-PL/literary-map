@@ -23,7 +23,10 @@ libraryDependencies ++= Seq(
   "org.webjars" %% "webjars-play" % "2.3.0-2",
   "org.webjars" % "bootstrap" % "3.1.1-2",
   "org.postgresql" % "postgresql" % "9.4-1200-jdbc4",
-  "com.google.code.geocoder-java" % "geocoder-java" % "0.15"
+  "com.google.code.geocoder-java" % "geocoder-java" % "0.15",
+  "javax.ws.rs" % "javax.ws.rs-api" % "2.0",
+  "org.glassfish.jersey.core" % "jersey-client" % "2.22",
+  "org.json" % "json" % "20141113"
 )
 
 buildInfoSettings

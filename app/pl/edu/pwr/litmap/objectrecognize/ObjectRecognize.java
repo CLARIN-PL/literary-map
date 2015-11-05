@@ -6,13 +6,7 @@
 
 package pl.edu.pwr.litmap.objectrecognize;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -21,7 +15,14 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -36,6 +37,7 @@ import pl.edu.pwr.litmap.textobjects.Text;
 import pl.edu.pwr.litmap.webservices.WebserviceClient;
 import pl.edu.pwr.litmap.webservices.php.PhpSerelWebserviceClient;
 import pl.edu.pwr.litmap.webservices.wsdl.WsdlWebservicesListClient;
+import pl.edu.pwr.services.serel.SerelServiceRs;
 import play.api.libs.Codecs;
 import play.cache.Cache;
 
@@ -62,14 +64,13 @@ public class ObjectRecognize {
 
             System.out.println("Load WsdlWebservicesListClient...");
 //	        WebserviceClient webserviceClient = new PhpWebserviceClient();
-	        WebserviceClient webserviceClient = new WsdlWebservicesListClient();
+//	        WebserviceClient webserviceClient = new WsdlWebservicesListClient();
             System.out.println("Process plainText in WsdlWebservicesListClient...");
-	        String result = webserviceClient.process(plainText);
-	        
-	        long totalTime = Calendar.getInstance().getTimeInMillis() - timeStart;
+			String result = SerelServiceRs.process(plainText);
+			long totalTime = Calendar.getInstance().getTimeInMillis() - timeStart;
 	        System.out.println("Total time waiting for webservices result: "+totalTime+" ms.");
 	        
-	//        System.out.println("Returned XML: \n"+result);
+	       //System.out.println("Returned XML: \n"+result);
 	        
 	        resultText = getText(result);
 
@@ -127,11 +128,13 @@ public class ObjectRecognize {
         } else {
         	try {
 	            doc.getDocumentElement().normalize();
-	        	Element docEle = doc.getDocumentElement();
+				Element docEle = doc.getDocumentElement();
 	        	NodeList relations = docEle.getElementsByTagName("relations");
-                if (relations.item(0).getNodeType() != Node.ELEMENT_NODE) {
+
+				if (relations.item(0).getNodeType() != Node.ELEMENT_NODE) {
                 	throw new UnrecognizedWebserviceResponseException("XML: Tag 'relations' is not element node.");
                 }
+
                 Element relationsElement = (Element) relations.item(0);
 	        	NodeList relationsList = relationsElement.getElementsByTagName("rel");
 	        	
@@ -176,8 +179,8 @@ public class ObjectRecognize {
 	                        } catch (NumberFormatException nfe) {
 	                        	throw new UnrecognizedWebserviceResponseException("Invalid text content of element (TO: ann nr). Exception: "+nfe+". Value = "+(e_from.getNodeValue() == null ? "null" : e_from.getNodeValue())+"\nNode relation element text content: \n"+nodeRelationElement.getTextContent()+"\nElement from text content:\n"+e_from.getTextContent());
 	                        }
-	                        
-	                        text.addRelationData(relationType, from_sentence_id, from_chan, from_ann_nr, to_sentence_id, to_chan, to_ann_nr);                     
+
+	                        text.addRelationData(relationType, from_sentence_id, from_chan, from_ann_nr, to_sentence_id, to_chan, to_ann_nr);
 	                    } else {
 	                    	throw new UnrecognizedWebserviceResponseException("Expecting Xml data. Node relation text content = "+nodeRelation.getTextContent());
 	                    }
@@ -192,5 +195,17 @@ public class ObjectRecognize {
         
         return text;
     }
-    
+
+	public static void printDocument(Document doc, OutputStream out) throws IOException, TransformerException {
+		TransformerFactory tf = TransformerFactory.newInstance();
+		Transformer transformer = tf.newTransformer();
+		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+		transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+		transformer.transform(new DOMSource(doc),
+				new StreamResult(new OutputStreamWriter(out, "UTF-8")));
+	}
 }

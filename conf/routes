@@ -3,31 +3,29 @@
 # ~~~~
 
 # Home page
-# GET     /                             controllers.Application.index()
+# GET   /                           controllers.Application.index()
 
 # Pages
-GET     /                  				controllers.Application.map()
-GET     /kontakt                  		controllers.Application.contact()
-GET     /informacje                  	controllers.Application.info()
-# POST    /tasks                  		controllers.Application.newTask()
-# POST    /tasks/:id/delete       		controllers.Application.deleteTask(id: Long)
-
-GET     /ex                  			controllers.Application.exampleData()
-
+GET     /                  			    controllers.Application.map()
+GET     /kontakt                  	    controllers.Application.contact()
+GET     /informacje                     controllers.Application.info()
+GET     /ex                  		    controllers.Application.exampleData()
+GET     /dokumenty                	    controllers.DocumentManager.getAll()
+GET     /dokument/:id       		    controllers.DocumentManager.getById(id: Long)
+GET     /dokument/:id/obiekty           controllers.DocumentManager.getObjectsByDocumentId(id: Long)
 GET     /dokument/nowy                  controllers.DocumentManager.create()
 POST    /dokument/dodaj                 controllers.DocumentManager.submit()
-POST    /dokument/dodaj_nowy                controllers.DocumentManager.submitApi()
-# GET     /dokumenty/usun            		controllers.DocumentManager.delete()
-GET     /dokumenty                		controllers.DocumentManager.getAll()
-GET     /dokument/:id       		    controllers.DocumentManager.getById(id: Long)
-# GET    /dokument/:id/obiekty       		controllers.DocumentManager.fakeGetObjectsByDocumentId(id: Long)
-GET     /dokument/:id/obiekty           controllers.DocumentManager.getObjectsByDocumentId(id: Long)
+POST    /dokument/dodaj_nowy            controllers.DocumentManager.submitApi()
+
+# GET   /dokumenty/usun            	    controllers.DocumentManager.delete()
+# GET   /dokument/:id/obiekty           controllers.DocumentManager.fakeGetObjectsByDocumentId(id: Long)
+# POST  /tasks                  	    controllers.Application.newTask()
+# POST  /tasks/:id/delete       	    controllers.Application.deleteTask(id: Long)
+
 
 # post: String text;
-POST	/przetworz						controllers.DocumentManager.getObjectsByText() 
-
+POST	/przetworz						controllers.DocumentManager.getObjectsByText()
 POST 	/addons/savedocument			controllers.DocumentManager.saveDocument()
-
 GET     /assets/javascripts/routes      controllers.Application.jsRoutes()
 
 # Map static resources from the /public folder to the /assets URL path
