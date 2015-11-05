@@ -61,7 +61,7 @@ public class SerelServiceRs {
     }
 
     public static String nlpTextDownload(String id) throws IOException {
-        URL url = new URL(nlprestURL + "download/" + id);
+        URL url = new URL(nlprestURL + "downloadbin/" + id);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setRequestProperty("Accept-Charset", "UTF-8");
